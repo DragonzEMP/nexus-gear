@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track Order — Nexus Gear</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-dark: #0b0d14;
+      --bg-card: #131622;
+      --border-color: #232738;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-purple: #7c5dfa;
+      --accent-yellow: #f4d03f;
+      --accent-green: #2ecc71;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: var(--bg-dark); 
+      color: var(--text-main); 
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-bar { background: #08090e; border-bottom: 1px solid var(--border-color); padding: 16px 0; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; width: 100%; }
+    .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+    .brand-logo { font-size: 1.6rem; font-weight: 800; color: #fff; text-decoration: none; }
+    .brand-logo span { color: var(--accent-purple); }
+
+    .track-wrapper { padding: 50px 20px; flex: 1; }
+    
+    .search-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 12px;
+      max-width: 500px;
+      margin: 20px auto 0;
+    }
+
+    .form-control {
+      flex: 1;
+      background: #0a0b10;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #fff;
+      outline: none;
+      font-family: inherit;
+    }
+    .form-control:focus { border-color: var(--accent-purple); }
+
+    .btn-track {
+      padding: 12px 24px;
+      background: var(--accent-purple);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Result Cards */
+    .order-result-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .status-badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-Pending { background: rgba(244, 208, 63, 0.15); color: var(--accent-yellow); }
+    .badge-Processing { background: rgba(124, 93, 250, 0.15); color: var(--accent-purple); }
+    .badge-Delivered { background: rgba(46, 204, 113, 0.15); color: var(--accent-green); }
+
+    /* Progress Tracker Bar */
+    .tracker-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      position: relative;
+    }
+    .tracker-bar::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--border-color);
+      z-index: 1;
+    }
+    .tracker-step {
+      position: relative;
+      z-index: 2;
+      background: var(--bg-card);
+      padding: 0 10px;
+      text-align: center;
+    }
+    .step-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--border-color);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px;
+      font-size: 0.85rem;
+    }
+    .tracker-step.active .step-icon {
+      background: var(--accent-purple);
+      color: #fff;
+    }
+    .tracker-step.active span { color: #fff; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="container nav-flex">
+      <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR.</a>
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none; font-weight:600;">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+    </div>
+  </header>
+
+  <div class="track-wrapper">
+    <div class="container">
+      
+      <div class="search-card">
+        <h2><i class="fa-solid fa-location-crosshairs" style="color:var(--accent-purple);"></i> Track Your Package</h2>
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-top:4px;">
+          Enter your Order ID or Phone Number to check real-time order status.
+        </p>
+
+        <form onsubmit="searchOrder(event)" class="search-box">
+          <input type="text" id="track-input" class="form-control" required placeholder="e.g. 1718002938 or 01700000000">
+          <button type="submit" class="btn-track"><i class="fa-solid fa-magnifying-glass"></i> Track</button>
+        </form>
+      </div>
+
+      <!-- Results Container -->
+      <div id="results-container"></div>
+
+    </div>
+  </div>
+
+  <script>
+    async function searchOrder(e) {
+      e.preventDefault();
+      const query = document.getElementById('track-input').value.trim();
+      const container = document.getElementById('results-container');
+
+      container.innerHTML = `<p style="text-align:center; color:var(--text-muted);">Searching...</p>`;
+
+      try {
+        const res = await fetch(`/api/orders/track?query=${encodeURIComponent(query)}`);
+        const data = await res.json();
+
+        if (data.success && data.orders.length > 0) {
+          container.innerHTML = data.orders.map(order => renderOrderCard(order)).join('');
+        } else {
+          container.innerHTML = `
+            <div class="order-result-card" style="text-align:center;">
+              <i class="fa-solid fa-circle-exclamation" style="font-size:2rem; color:#ff4757; margin-bottom:10px;"></i>
+              <p style="color:#fff;">${data.message || 'No orders found.'}</p>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error("Tracking Error:", err);
+        container.innerHTML = `<p style="text-align:center; color:#ff4757;">Failed to connect to server.</p>`;
+      }
+    }
+
+    function renderOrderCard(o) {
+      const isPending = o.status === 'Pending';
+      const isProcessing = o.status === 'Processing';
+      const isDelivered = o.status === 'Delivered';
+
+      return `
+        <div class="order-result-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:16px; margin-bottom:16px;">
+            <div>
+              <strong style="color:#fff; font-size:1.1rem;">Order #${o.id}</strong>
+              <span style="display:block; color:var(--text-muted); font-size:0.85rem;">Date: ${o.date || 'N/A'}</span>
+            </div>
+            <span class="status-badge badge-${o.status}">${o.status}</span>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <span style="color:var(--text-muted); font-size:0.85rem;">Items Ordered:</span>
+            <p style="color:#fff; font-weight:600;">${o.items}</p>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; color:var(--text-muted);">
+            <span>Customer: <strong style="color:#fff;">${o.customer}</strong></span>
+            <span>Total: <strong style="color:var(--accent-yellow);">৳ ${o.total.toLocaleString()}</strong></span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="tracker-bar">
+            <div class="tracker-step ${isPending || isProcessing || isDelivered ? 'active' : ''}">
+              <div class="step-icon"><i class="fa-solid fa-clock"></i></div>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Placed</span>
+            </div>
+
+            <div class="tracker-step ${isProcessing || isDelivered ? 'active' : ''}">
+              <div class="step-icon"><i class="fa-solid fa-box-open"></i></div>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Processing</span>
+            </div>
+
+            <div class="tracker-step ${isDelivered ? 'active' : ''}">
+              <div class="step-icon"><i class="fa-solid fa-house-chimney-check"></i></div>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Delivered</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

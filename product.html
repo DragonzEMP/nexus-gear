@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details — GG EZ Gadgets</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+  /* Dark Premium Gaming Theme */
+  :root {
+    --pd-bg: #0b0d14;
+    --pd-card-bg: #131622;
+    --pd-card-border: #232738;
+    --pd-text-main: #f1f5f9;
+    --pd-text-muted: #94a3b8;
+    --pd-accent: #7c5dfa;
+    --pd-accent-hover: #6642f5;
+    --pd-glow: rgba(124, 93, 250, 0.25);
+    --pd-yellow: #f4d03f;
+    --pd-green: #2ecc71;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    background-color: var(--pd-bg); 
+    color: var(--pd-text-main); 
+    line-height: 1.6; 
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  /* Top Navigation Bar */
+  .top-bar { 
+    background: #08090e; 
+    border-bottom: 1px solid var(--pd-card-border); 
+    padding: 16px 0; 
+  }
+  .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+  .brand-logo { font-size: 1.6rem; font-weight: 800; color: #fff; text-decoration: none; }
+  .brand-logo span { color: var(--pd-accent); }
+  .brand-logo .dot { color: var(--pd-yellow); }
+
+  /* Breadcrumbs */
+  .breadcrumb { padding: 24px 0 16px; font-size: 0.85rem; color: var(--pd-text-muted); }
+  .breadcrumb a { color: var(--pd-text-muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--pd-accent); }
+
+  /* Main Product Card Grid */
+  .product-detail-card {
+    background: var(--pd-card-bg);
+    border: 1px solid var(--pd-card-border);
+    border-radius: 16px;
+    padding: 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+    margin-bottom: 35px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  /* Left Column: Image Box */
+  .product-gallery { display: flex; flex-direction: column; gap: 15px; }
+  .main-img-box {
+    width: 100%;
+    height: 420px;
+    background: #0a0b10;
+    border: 1px solid var(--pd-card-border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    transition: border-color 0.3s;
+  }
+  .main-img-box:hover {
+    border-color: var(--pd-accent);
+    box-shadow: 0 0 25px var(--pd-glow);
+  }
+  .main-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+  /* Right Column: Information */
+  .product-info-col { display: flex; flex-direction: column; }
+  .p-title { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 14px; line-height: 1.3; }
+  
+  .p-meta { display: flex; gap: 15px; align-items: center; font-size: 0.85rem; margin-bottom: 20px; flex-wrap: wrap; }
+  .p-brand-badge { 
+    background: rgba(124, 93, 250, 0.15); 
+    color: var(--pd-accent); 
+    border: 1px solid rgba(124, 93, 250, 0.3);
+    padding: 4px 12px; 
+    border-radius: 6px; 
+    font-weight: 700; 
+  }
+  .p-stock { color: var(--pd-green); font-weight: 700; }
+
+  /* Price Row */
+  .p-price-row { 
+    display: flex; 
+    align-items: baseline; 
+    gap: 12px; 
+    margin: 15px 0 25px; 
+    border-top: 1px solid var(--pd-card-border); 
+    border-bottom: 1px solid var(--pd-card-border); 
+    padding: 20px 0; 
+  }
+  .price-now { font-size: 2.2rem; font-weight: 800; color: var(--pd-yellow); text-shadow: 0 0 12px rgba(244, 208, 63, 0.2); }
+
+  /* Quantity Counter */
+  .qty-selector { 
+    display: flex; 
+    align-items: center; 
+    background: #0a0b10;
+    border: 1px solid var(--pd-card-border); 
+    border-radius: 8px; 
+    width: fit-content; 
+    margin-bottom: 25px; 
+  }
+  .qty-btn { 
+    background: transparent; 
+    color: #fff; 
+    border: none; 
+    padding: 10px 18px; 
+    font-size: 1.2rem; 
+    cursor: pointer; 
+    transition: background 0.2s;
+  }
+  .qty-btn:hover { background: rgba(255,255,255,0.05); }
+  .qty-input { width: 45px; text-align: center; border: none; background: transparent; color: #fff; font-weight: 700; outline: none; }
+
+  /* Action Buttons */
+  .btn-group { display: flex; gap: 15px; margin-bottom: 30px; }
+  .pd-btn {
+    flex: 1;
+    padding: 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.25s ease;
+  }
+  .btn-add-cart { 
+    background: rgba(124, 93, 250, 0.15); 
+    color: #fff; 
+    border: 1px solid var(--pd-accent); 
+  }
+  .btn-add-cart:hover { 
+    background: var(--pd-accent); 
+    box-shadow: 0 0 20px var(--pd-glow);
+  }
+  .btn-buy-now { 
+    background: var(--pd-accent); 
+    color: #fff; 
+    box-shadow: 0 4px 15px var(--pd-glow);
+  }
+  .btn-buy-now:hover { 
+    background: var(--pd-accent-hover); 
+    transform: translateY(-2px);
+  }
+
+  /* Trust Indicators */
+  .trust-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 16px; 
+    padding-top: 24px; 
+    border-top: 1px solid var(--pd-card-border); 
+  }
+  .trust-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--pd-text-muted); }
+  .trust-item i { color: var(--pd-accent); font-size: 1.1rem; }
+
+  /* Description & Spec Tabs */
+  .tab-section { 
+    background: var(--pd-card-bg); 
+    border: 1px solid var(--pd-card-border); 
+    border-radius: 16px; 
+    padding: 36px; 
+    margin-bottom: 60px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  /* Specification Table Styling */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.spec-table tr {
+  border-bottom: 1px solid var(--pd-card-border);
+}
+
+.spec-table td {
+  padding: 14px 10px;
+  font-size: 0.95rem;
+}
+
+.spec-label {
+  font-weight: 700;
+  color: #fff;
+  width: 35%;
+  vertical-align: top;
+}
+
+.spec-value {
+  color: var(--pd-text-muted);
+  width: 65%;
+  text-align: right;
+  vertical-align: top;
+}
+
+/* Description Typography Styling */
+#pd-description h2, #pd-description h3 {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 24px 0 10px 0;
+}
+
+#pd-description h2:first-child, #pd-description h3:first-child {
+  margin-top: 0;
+}
+
+#pd-description p {
+  color: var(--pd-text-muted);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+  .tab-headers { display: flex; gap: 20px; border-bottom: 2px solid var(--pd-card-border); margin-bottom: 25px; }
+  .tab-btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--pd-text-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: #fff; }
+  .tab-btn.active { color: var(--pd-accent); border-bottom-color: var(--pd-accent); }
+
+  .tab-pane { display: none; min-height: 120px; color: var(--pd-text-main); }
+  .tab-pane.active { display: block; }
+  .empty-placeholder { color: var(--pd-text-muted); font-style: italic; }
+
+  @media (max-width: 768px) {
+    .product-detail-card { grid-template-columns: 1fr; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top Header Bar -->
+  <header class="top-bar">
+    <div class="container nav-flex">
+      <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR.</a>
+      <a href="index.html" style="color: #fff; text-decoration: none; font-weight: 600;"><i class="fa-solid fa-arrow-left"></i> Back to Shop</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> / <span id="bc-category">Category</span> / <span id="bc-title">Product Name</span>
+    </div>
+
+    <!-- Product Card -->
+    <div class="product-detail-card">
+      
+      <!-- Product Image Gallery -->
+      <div class="product-gallery">
+        <div class="main-img-box">
+          <img id="pd-main-img" src="" alt="Product Image">
+        </div>
+      </div>
+
+      <!-- Product Information -->
+      <div class="product-info-col">
+        <h1 class="p-title" id="pd-title">Loading Product...</h1>
+
+        <div class="p-meta">
+          <span class="p-brand-badge" id="pd-brand">Brand</span>
+          <span>Category: <strong id="pd-category" style="color: var(--pd-text-main);">General</strong></span>
+          <span class="p-stock"><i class="fa-solid fa-circle-check"></i> In Stock</span>
+        </div>
+
+        <div class="p-price-row">
+          <span class="price-now" id="pd-price">৳ 0</span>
+        </div>
+
+        <!-- Quantity Selector -->
+        <div class="qty-selector">
+          <button class="qty-btn" onclick="changeQty(-1)">-</button>
+          <input type="text" id="pd-qty" class="qty-input" value="1" readonly>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+          <button class="pd-btn btn-add-cart" onclick="triggerAddToCart()">
+            <i class="fa-solid fa-cart-plus"></i> Add to Cart
+          </button>
+          <button class="pd-btn btn-buy-now" onclick="triggerBuyNow()">
+            Buy Now
+          </button>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="trust-grid">
+          <div class="trust-item"><i class="fa-solid fa-shield-halved"></i> 100% Authentic Product</div>
+          <div class="trust-item"><i class="fa-solid fa-truck-fast"></i> Fast Delivery (1-3 Days)</div>
+          <div class="trust-item"><i class="fa-solid fa-rotate-left"></i> Easy Return Policy</div>
+          <div class="trust-item"><i class="fa-solid fa-headset"></i> 24/7 Support</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tabs: Description & Specifications -->
+    <div class="tab-section">
+      <div class="tab-headers">
+        <button class="tab-btn active" onclick="switchTab('desc-tab', this)">Description</button>
+        <button class="tab-btn" onclick="switchTab('spec-tab', this)">Specifications</button>
+      </div>
+
+      <!-- Description Pane (Empty for now) -->
+      <div id="desc-tab" class="tab-pane active">
+        <div id="pd-description">
+          <p class="empty-placeholder">No detailed description has been added for this product yet.</p>
+        </div>
+      </div>
+
+      <!-- Specifications Pane (Empty for now) -->
+      <div id="spec-tab" class="tab-pane">
+        <div id="pd-specifications">
+          <p class="empty-placeholder">No technical specifications available for this product.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentProduct = null;
+
+    // Quantity controls
+    function changeQty(delta) {
+      const input = document.getElementById('pd-qty');
+      let val = parseInt(input.value) + delta;
+      if (val < 1) val = 1;
+      input.value = val;
+    }
+
+    // Switch Description / Spec Tabs
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Fetch Product Data by ID from URL Query Parameter
+    async function loadProductDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+
+      if (!productId) {
+        alert("No product specified!");
+        window.location.href = "index.html";
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/products');
+        const products = await res.json();
+        currentProduct = products.find(p => p.id == productId);
+
+        if (!currentProduct) {
+          alert("Product not found!");
+          window.location.href = "index.html";
+          return;
+        }
+
+        // Fill UI Elements
+        document.title = `${currentProduct.name} — GG EZ Gadgets`;
+        document.getElementById('bc-title').textContent = currentProduct.name;
+        document.getElementById('bc-category').textContent = currentProduct.category;
+        
+        document.getElementById('pd-title').textContent = currentProduct.name;
+        document.getElementById('pd-brand').textContent = currentProduct.brand || 'Brand';
+        document.getElementById('pd-category').textContent = currentProduct.category;
+        document.getElementById('pd-price').textContent = `৳ ${currentProduct.price.toLocaleString()}`;
+        document.getElementById('pd-main-img').src = currentProduct.image;
+
+        // Render Description & Specifications if present later
+        // 1. Render Description (Supports <h2>, <h3>, <p>, <strong> tags)
+if (currentProduct.description) {
+  document.getElementById('pd-description').innerHTML = currentProduct.description;
+} else {
+  document.getElementById('pd-description').innerHTML = `<p class="empty-placeholder">No description available.</p>`;
+}
+
+// 2. Render Specifications as a Clean Table
+if (currentProduct.specifications) {
+  // If spec starts with <table>, render as raw HTML directly
+  if (currentProduct.specifications.trim().startsWith('<table')) {
+    document.getElementById('pd-specifications').innerHTML = currentProduct.specifications;
+  } else {
+    // Otherwise, parse key:value lines into a clean table automatically
+    const lines = currentProduct.specifications.split('\n').filter(line => line.trim() !== '');
+    let tableHTML = `<table class="spec-table"><tbody>`;
+    
+    lines.forEach(line => {
+      const parts = line.split(':');
+      if (parts.length >= 2) {
+        const key = parts[0].trim();
+        const value = parts.slice(1).join(':').trim();
+        tableHTML += `
+          <tr>
+            <td class="spec-label">${key}</td>
+            <td class="spec-value">${value}</td>
+          </tr>`;
+      }
+    });
+
+    tableHTML += `</tbody></table>`;
+    document.getElementById('pd-specifications').innerHTML = tableHTML;
+  }
+} else {
+  document.getElementById('pd-specifications').innerHTML = `<p class="empty-placeholder">No specifications available.</p>`;
+}
+
+      } catch (err) {
+        console.error("Error loading product detail:", err);
+      }
+    }
+
+    // Add to Cart Logic
+    function triggerAddToCart() {
+      if (!currentProduct) return;
+      const qty = parseInt(document.getElementById('pd-qty').value);
+      
+      let cart = JSON.parse(localStorage.getItem("ggez_cart")) || [];
+      const existing = cart.find(i => i.id === currentProduct.id);
+      
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({ ...currentProduct, qty: qty });
+      }
+
+      localStorage.setItem("ggez_cart", JSON.stringify(cart));
+      alert(`✅ Added ${qty} item(s) to cart!`);
+    }
+
+    function triggerBuyNow() {
+      triggerAddToCart();
+      window.location.href = "index.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", loadProductDetail);
+  </script>
+</body>
+</html>

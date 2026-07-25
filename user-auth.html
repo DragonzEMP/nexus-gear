@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Login — Nexus Gear</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #0b0d14;
+      --bg-card: #131622;
+      --border-color: #232738;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-purple: #7c5dfa;
+      --accent-yellow: #f4d03f;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: var(--bg-dark); 
+      color: var(--text-main); 
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-bar { background: #08090e; border-bottom: 1px solid var(--border-color); padding: 16px 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+    .brand-logo { font-size: 1.6rem; font-weight: 800; color: #fff; text-decoration: none; }
+    .brand-logo span { color: var(--accent-purple); }
+
+    .auth-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 36px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .auth-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 28px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      color: var(--accent-purple);
+      border-bottom-color: var(--accent-purple);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-control {
+      background: #0a0b10;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-purple);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent-purple);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #6642f5;
+    }
+
+    .form-pane { display: none; }
+    .form-pane.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="container nav-flex">
+      <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR.</a>
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none; font-weight:600;">
+        <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+      </a>
+    </div>
+  </header>
+
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      
+      <!-- Tabs Switcher -->
+      <div class="auth-tabs">
+        <button class="tab-btn active" onclick="switchAuthTab('login-pane', this)">Login</button>
+        <button class="tab-btn" onclick="switchAuthTab('register-pane', this)">Register</button>
+      </div>
+
+      <!-- CUSTOMER LOGIN FORM -->
+      <form id="login-pane" class="form-pane active">
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="login-phone" class="form-control" required placeholder="01700000000">
+        </div>
+        <div class="form-group">
+          <label>Password *</label>
+          <input type="password" id="login-pass" class="form-control" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-submit">Sign In to Continue</button>
+      </form>
+
+      <!-- CUSTOMER REGISTER FORM -->
+      <form id="register-pane" class="form-pane">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="reg-name" class="form-control" required placeholder="Rakib Hossain">
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="reg-phone" class="form-control" required placeholder="01700000000">
+        </div>
+        <div class="form-group">
+          <label>Delivery Address *</label>
+          <input type="text" id="reg-address" class="form-control" required placeholder="House 12, Road 4, Dhanmondi, Dhaka">
+        </div>
+        <div class="form-group">
+          <label>Password *</label>
+          <input type="password" id="reg-pass" class="form-control" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-submit">Create Account</button>
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    function switchAuthTab(paneId, btn) {
+      document.querySelectorAll('.form-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(paneId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function handlePostAuth() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectTo = urlParams.get('redirect') || 'index.html';
+      window.location.href = redirectTo;
+    }
+
+    // Register Submit
+    document.getElementById('register-pane').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const newUser = {
+        name: document.getElementById('reg-name').value,
+        phone: document.getElementById('reg-phone').value,
+        address: document.getElementById('reg-address').value,
+        pass: document.getElementById('reg-pass').value
+      };
+
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newUser)
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          localStorage.setItem('ggez_customer', JSON.stringify(data.user));
+          localStorage.setItem('customer_logged_in', 'true');
+          alert(`Welcome, ${data.user.name}! Account created successfully.`);
+          handlePostAuth();
+        } else {
+          alert(data.message || 'Registration failed.');
+        }
+      } catch (err) {
+        console.error('Registration error:', err);
+        alert('Server connection error.');
+      }
+    });
+
+    // Login Submit
+    document.getElementById('login-pane').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const credentials = {
+        phone: document.getElementById('login-phone').value,
+        pass: document.getElementById('login-pass').value
+      };
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(credentials)
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          localStorage.setItem('ggez_customer', JSON.stringify(data.user));
+          localStorage.setItem('customer_logged_in', 'true');
+          alert(`Welcome back, ${data.user.name}!`);
+          handlePostAuth();
+        } else {
+          alert(data.message || 'Invalid credentials.');
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        alert('Server connection error.');
+      }
+    });
+  </script>
+</body>
+</html>

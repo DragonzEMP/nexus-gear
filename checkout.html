@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — Nexus Gear</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #0b0d14;
+      --bg-card: #131622;
+      --border-color: #232738;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-purple: #7c5dfa;
+      --accent-yellow: #f4d03f;
+      --accent-green: #2ecc71;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: var(--bg-dark); 
+      color: var(--text-main); 
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .top-bar { background: #08090e; border-bottom: 1px solid var(--border-color); padding: 16px 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+    .brand-logo { font-size: 1.6rem; font-weight: 800; color: #fff; text-decoration: none; }
+    .brand-logo span { color: var(--accent-purple); }
+
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 30px;
+      margin: 40px auto;
+    }
+
+    .checkout-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .full-width { grid-column: 1 / -1; }
+
+    .form-control {
+      background: #0a0b10;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+    }
+    .form-control:focus { border-color: var(--accent-purple); }
+
+    /* Order Summary List */
+    .order-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .order-item-left { display: flex; align-items: center; gap: 12px; }
+    .order-item img { width: 50px; height: 50px; object-fit: contain; background: #0a0b10; border-radius: 6px; }
+
+    .cost-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0 0;
+      margin-top: 10px;
+      border-top: 1px solid var(--border-color);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent-yellow);
+    }
+
+    .btn-place-order {
+      width: 100%;
+      padding: 16px;
+      background: var(--accent-purple);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.25s ease;
+    }
+    .btn-place-order:hover {
+      background: #6642f5;
+      box-shadow: 0 0 20px rgba(124, 93, 250, 0.4);
+    }
+
+    /* Success Overlay */
+    .success-box {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .success-box i { font-size: 4rem; color: var(--accent-green); margin-bottom: 20px; }
+    .success-box h1 { font-size: 2rem; color: #fff; margin-bottom: 10px; }
+
+    @media (max-width: 850px) {
+      .checkout-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-bar">
+    <div class="container nav-flex">
+      <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR.</a>
+      <a href="index.html" style="color:var(--text-muted); text-decoration:none; font-weight:600;">
+        <i class="fa-solid fa-store"></i> Back to Store
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- MAIN CHECKOUT SECTION -->
+    <div id="checkout-main" class="checkout-layout">
+      
+      <!-- Left Column: Shipping Form -->
+      <div>
+        <div class="checkout-card">
+          <div class="card-title">
+            <i class="fa-solid fa-truck-fast" style="color:var(--accent-purple);"></i>
+            Shipping & Customer Details
+          </div>
+
+          <form id="checkout-form">
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label style="font-size:0.85rem; color:var(--text-muted);">Full Name *</label>
+                <input type="text" id="cust-name" class="form-control" required placeholder="Rakib Hossain">
+              </div>
+
+              <div class="form-group">
+                <label style="font-size:0.85rem; color:var(--text-muted);">Phone Number *</label>
+                <input type="tel" id="cust-phone" class="form-control" required placeholder="01700000000">
+              </div>
+
+              <div class="form-group">
+                <label style="font-size:0.85rem; color:var(--text-muted);">City / District *</label>
+                <select id="cust-city" class="form-control" onchange="calculateTotal()" required>
+                  <option value="Inside Dhaka">Inside Dhaka (৳60 Delivery)</option>
+                  <option value="Outside Dhaka">Outside Dhaka (৳120 Delivery)</option>
+                </select>
+              </div>
+
+              <div class="form-group full-width">
+                <label style="font-size:0.85rem; color:var(--text-muted);">Full Address *</label>
+                <textarea id="cust-address" class="form-control" rows="3" required placeholder="House 12, Road 4, Sector 3, Uttara, Dhaka"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="checkout-card">
+          <div class="card-title">
+            <i class="fa-solid fa-wallet" style="color:var(--accent-yellow);"></i>
+            Payment Method
+          </div>
+          <div style="background:#0a0b10; border:1px solid var(--accent-purple); padding:16px; border-radius:10px; display:flex; align-items:center; gap:12px;">
+            <i class="fa-solid fa-money-bill-wave" style="color:var(--accent-green); font-size:1.5rem;"></i>
+            <div>
+              <strong style="color:#fff; display:block;">Cash on Delivery (COD)</strong>
+              <small style="color:var(--text-muted);">Pay with cash when your package is delivered to your doorstep.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Summary -->
+      <div>
+        <div class="checkout-card">
+          <div class="card-title">
+            <i class="fa-solid fa-receipt" style="color:var(--accent-yellow);"></i>
+            Order Summary
+          </div>
+
+          <div id="checkout-items-list">
+            <!-- Dynamically populated from cart -->
+          </div>
+
+          <div style="margin-top:20px;">
+            <div class="cost-row">
+              <span>Subtotal</span>
+              <span id="summary-subtotal">৳ 0</span>
+            </div>
+            <div class="cost-row">
+              <span>Shipping Fee</span>
+              <span id="summary-shipping">৳ 60</span>
+            </div>
+            <div class="total-row">
+              <span>Total Amount</span>
+              <span id="summary-total">৳ 0</span>
+            </div>
+
+            <button type="button" onclick="submitOrder()" class="btn-place-order">
+              <i class="fa-solid fa-check-circle"></i> Confirm Order
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="checkout-success" class="checkout-card success-box">
+      <i class="fa-solid fa-circle-check"></i>
+      <h1>Order Placed Successfully!</h1>
+      <p style="color:var(--text-muted); max-width:500px; margin:0 auto 24px;">
+        Thank you for shopping with GG EZ Gadgets! Your order ID is <strong id="placed-order-id" style="color:var(--accent-yellow);">#0000</strong>. We will process and ship your order shortly.
+      </p>
+      <a href="index.html" class="btn-place-order" style="display:inline-block; text-decoration:none; max-width:250px;">
+        Return to Home
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    let subtotalAmount = 0;
+    let finalTotalAmount = 0;
+
+    // Load customer data & cart items on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Auto-fill user profile if logged in
+      const savedCustomer = JSON.parse(localStorage.getItem('ggez_customer'));
+      if (savedCustomer) {
+        if (savedCustomer.name) document.getElementById('cust-name').value = savedCustomer.name;
+        if (savedCustomer.phone) document.getElementById('cust-phone').value = savedCustomer.phone;
+        if (savedCustomer.address) document.getElementById('cust-address').value = savedCustomer.address;
+      }
+
+      // 2. Render Cart Items
+      renderCartSummary();
+    });
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem("ggez_cart")) || [];
+    }
+
+    function renderCartSummary() {
+      const cart = getCart();
+      const container = document.getElementById('checkout-items-list');
+
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        window.location.href = "index.html";
+        return;
+      }
+
+      container.innerHTML = '';
+      subtotalAmount = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        subtotalAmount += itemTotal;
+
+        container.innerHTML += `
+          <div class="order-item">
+            <div class="order-item-left">
+              <img src="${item.image}" alt="${item.name}">
+              <div>
+                <strong style="font-size:0.9rem; color:#fff; display:block;">${item.name}</strong>
+                <small style="color:var(--text-muted);">Qty: ${item.qty} × ৳ ${item.price.toLocaleString()}</small>
+              </div>
+            </div>
+            <span style="font-weight:700; color:#fff;">৳ ${itemTotal.toLocaleString()}</span>
+          </div>
+        `;
+      });
+
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      const city = document.getElementById('cust-city').value;
+      const shippingFee = city === 'Inside Dhaka' ? 60 : 120;
+      finalTotalAmount = subtotalAmount + shippingFee;
+
+      document.getElementById('summary-subtotal').textContent = `৳ ${subtotalAmount.toLocaleString()}`;
+      document.getElementById('summary-shipping').textContent = `৳ ${shippingFee}`;
+      document.getElementById('summary-total').textContent = `৳ ${finalTotalAmount.toLocaleString()}`;
+    }
+
+    async function submitOrder() {
+      const name = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim();
+      const address = document.getElementById('cust-address').value.trim();
+
+      if (!name || !phone || !address) {
+        alert("Please fill in all shipping details!");
+        return;
+      }
+
+      const cart = getCart();
+      const itemsFormatted = cart.map(i => `${i.name} (x${i.qty})`).join(', ');
+
+      const newOrder = {
+        customer: name,
+        phone: phone,
+        address: address,
+        items: itemsFormatted,
+        total: finalTotalAmount,
+        status: "Pending",
+        date: new Date().toISOString().split('T')[0]
+      };
+
+      try {
+        // Post order directly to express server API
+        const res = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newOrder)
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          // Clear cart
+          localStorage.removeItem("ggez_cart");
+
+          // Display success panel
+          document.getElementById('checkout-main').style.display = 'none';
+          document.getElementById('placed-order-id').textContent = `#${data.order.id}`;
+          document.getElementById('checkout-success').style.display = 'block';
+        } else {
+          alert("Error placing order. Please try again.");
+        }
+      } catch (err) {
+        console.error("Order submission error:", err);
+        alert("Server communication error.");
+      }
+    }
+  </script>
+</body>
+</html>

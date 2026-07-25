@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Category — GG EZ Gadgets</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    .category-page-container {
+      max-width: 1280px;
+      margin: 30px auto;
+      padding: 0 24px;
+    }
+
+    .category-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .category-header h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .category-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 30px;
+    }
+
+    /* Sidebar Controls */
+    .filter-sidebar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      height: fit-content;
+    }
+
+    .filter-group {
+      margin-bottom: 24px;
+    }
+
+    .filter-group h3 {
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .brand-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .brand-item input {
+      accent-color: var(--accent-purple);
+      cursor: pointer;
+    }
+
+    /* Controls Bar */
+    .toolbar-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px 20px;
+    }
+
+    .form-control-sm {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+    }
+
+    @media (max-width: 768px) {
+      .category-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo"><span>GG</span>EZ<span class="dot">.</span></a>
+      <div class="nav-links">
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="category-page-container">
+    
+    <!-- Category Header -->
+    <div class="category-header">
+      <div>
+        <span style="color:var(--text-muted); font-size:0.85rem;">Browsing Category</span>
+        <h1 id="cat-title">Keyboards</h1>
+      </div>
+      <span id="cat-count-badge" style="background:var(--bg-secondary); padding:6px 14px; border-radius:20px; font-weight:700; color:var(--accent-yellow); font-size:0.85rem;">0 Items Found</span>
+    </div>
+
+    <div class="category-layout">
+      
+      <!-- Sidebar Filters -->
+      <aside class="filter-sidebar">
+        <div class="filter-group">
+          <h3><i class="fa-solid fa-filter" style="color:var(--accent-purple);"></i> Filter By Brand</h3>
+          <div class="brand-list" id="brand-filters">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- Products Grid & Sort Header -->
+      <main>
+        <div class="toolbar-bar">
+          <span style="color:var(--text-muted); font-size:0.9rem;">Sort Products:</span>
+          <select id="cat-sort" class="form-control-sm" onchange="filterCategoryProducts()">
+            <option value="default">Default Sorting</option>
+            <option value="low-high">Price: Low to High</option>
+            <option value="high-low">Price: High to Low</option>
+          </select>
+        </div>
+
+        <div class="products-grid" id="category-products-grid">
+          <!-- Dynamically populated from API -->
+        </div>
+      </main>
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof loadCategoryPage === "function") {
+        loadCategoryPage();
+      }
+    });
+  </script>
+</body>
+</html>

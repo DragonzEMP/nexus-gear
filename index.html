@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Gear — Elevate Your Play</title>
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Top Announcement Marquee -->
+  <div class="announcement-bar">
+    <div class="announcement-track">
+      <span>⚡ 100% Genuine Products with Official Warranty</span>
+      <span>•</span>
+      <span>🚀 Free Nationwide Delivery on Orders Over ৳2000</span>
+      <span>•</span>
+      <span>💰 Best Price Guarantee on All Gaming Gear</span>
+      <span>•</span>
+      <span>💬 24/7 Live Customer Support</span>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR.</a>
+
+      <!-- Category Menu -->
+      <nav class="nav-links">
+        <a href="#hero" class="active">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#new-arrivals">New Trends</a>
+        <a href="#featured">Featured</a>
+        <a href="admin.html" id="admin-nav-link" class="admin-badge">⚡ Admin Panel</a>
+        <a href="track.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-location-dot" style="color: var(--accent-purple);"></i> Track Order
+         </a>
+      </nav>
+
+      <!-- Header Search & Cart Actions -->
+      <div class="nav-actions">
+  <!-- Live Search Box with Dropdown -->
+  <div class="search-box" style="position: relative;">
+    <input type="text" id="site-search-input" placeholder="Search keyboards, mice, monitors...">
+    <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+    <!-- Dropdown for live search results -->
+    <div id="search-results-dropdown" style="display: none; position: absolute; top: 110%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; max-height: 350px; overflow-y: auto; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 8px 0;">
+    </div>
+  </div>
+  <!-- CUSTOMER ACCOUNT BUTTON (ADD / UPDATE THIS HERE) -->
+  <a href="#" onclick="handleAccountClick(event)" class="icon-btn" aria-label="Account" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+    <i class="fa-solid fa-user"></i>
+  </a>
+
+  <button class="icon-btn cart-btn" id="cart-btn" aria-label="Open Cart">
+    <i class="fa-solid fa-bag-shopping"></i>
+    <span class="cart-badge" id="cart-count">0</span>
+  </button>
+</div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Promo Grid -->
+  <section id="hero" class="hero-section">
+    <div class="hero-container">
+      
+      <!-- Main Banner Slider -->
+      <div class="hero-slider">
+        <div class="slides-wrapper" id="slides-wrapper">
+          
+          <!-- Slide 1 -->
+          <div class="slide active" style="background-image: linear-gradient(90deg, rgba(10,11,16,0.9) 30%, rgba(10,11,16,0.2)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80');">
+            <div class="slide-content">
+              <span class="badge badge-hot">⚡ MEGA SALE</span>
+              <h1>Level Up Your<br>Battle Station</h1>
+              <p>Get up to 30% off premium mechanical keyboards, ultra-light mice & high refresh monitors.</p>
+              <a href="#featured" class="btn btn-primary">Shop Deals <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide" style="background-image: linear-gradient(90deg, rgba(10,11,16,0.9) 30%, rgba(10,11,16,0.2)), url('https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1200&q=80');">
+            <div class="slide-content">
+              <span class="badge badge-new">🎹 NEW ARRIVAL</span>
+              <h1>Tri-Mode Wireless<br>Gaming Peripherals</h1>
+              <p>Experience latency-free 2.4GHz wireless performance with long battery life.</p>
+              <a href="#new-arrivals" class="btn btn-primary">Explore Now <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Slider Navigation Controls -->
+        <button class="slider-arrow prev-slide" id="prev-slide"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="slider-arrow next-slide" id="next-slide"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+
+      <!-- Right Side Promo Grid Cards -->
+      <div class="hero-promos">
+        <div class="promo-card" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=600&q=80');">
+          <span class="promo-label">Limited Edition</span>
+          <h3>Custom Keyboards</h3>
+          <a href="#categories" class="promo-link">Browse Selection <i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+        <div class="promo-card" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=600&q=80');">
+          <span class="promo-label">Esports Grade</span>
+          <h3>Precision Mice</h3>
+          <a href="#categories" class="promo-link">View Models <i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+<!-- Categories Grid -->
+<section id="categories" class="container section">
+  <div class="section-title-wrap">
+    <h2>Featured Categories</h2>
+    <p>Browse our catalog by product type</p>
+  </div>
+
+  <div class="categories-grid">
+    <div class="cat-card" onclick="window.location.href='category.html?name=Keyboards'" style="cursor: pointer;">
+      <div class="cat-icon">⌨️</div>
+      <h3>Keyboards</h3>
+    </div>
+    <div class="cat-card" onclick="window.location.href='category.html?name=Mice'" style="cursor: pointer;">
+      <div class="cat-icon">🖱️</div>
+      <h3>Mice</h3>
+    </div>
+    <div class="cat-card" onclick="window.location.href='category.html?name=Monitors'" style="cursor: pointer;">
+      <div class="cat-icon">🖥️</div>
+      <h3>Monitors</h3>
+    </div>
+    <div class="cat-card" onclick="window.location.href='category.html?name=Audio'" style="cursor: pointer;">
+      <div class="cat-icon">🎧</div>
+      <h3>Audio & Headsets</h3>
+    </div>
+    <div class="cat-card" onclick="window.location.href='category.html?name=Gamepads'" style="cursor: pointer;">
+      <div class="cat-icon">🎮</div>
+      <h3>Gamepads</h3>
+    </div>
+    <div class="cat-card" onclick="window.location.href='category.html?name=Accessories'" style="cursor: pointer;">
+      <div class="cat-icon">⚙️</div>
+      <h3>Accessories</h3>
+    </div>
+  </div>
+</section>
+
+  <!-- New Trends Grid -->
+  <section id="new-arrivals" class="container section">
+    <div class="section-title-wrap">
+      <h2>🔥 New Trends & Arrivals</h2>
+      <p>The newest hardware additions to our store</p>
+    </div>
+    <div class="product-grid" id="new-products-grid">
+      <!-- Injected via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Featured Products Grid -->
+  <section id="featured" class="container section">
+    <div class="section-title-wrap">
+      <h2>⭐ Featured Gear</h2>
+      <p>Top rated products recommended by pro gamers</p>
+    </div>
+    <div class="product-grid" id="featured-products-grid">
+      <!-- Injected via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Trust Badges Bar -->
+  <section class="trust-section">
+    <div class="container trust-grid">
+      <div class="trust-box">
+        <i class="fa-solid fa-check-double"></i>
+        <h4>100% Authentic</h4>
+        <p>Direct from official brand distributors</p>
+      </div>
+      <div class="trust-box">
+        <i class="fa-solid fa-shield-virus"></i>
+        <h4>Official Warranty</h4>
+        <p>Complete replacement coverage</p>
+      </div>
+      <div class="trust-box">
+        <i class="fa-solid fa-truck-fast"></i>
+        <h4>Fast Delivery</h4>
+        <p>Express shipping in 24-48 hours</p>
+      </div>
+      <div class="trust-box">
+        <i class="fa-solid fa-headset"></i>
+        <h4>24/7 Support</h4>
+        <p>Expert gaming assistance anytime</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-about">
+      <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR<span class="dot">.</span></a>
+      <p>Nexus Gear is your premier store for high-performance gaming gear, custom mechanical keyboards, precision mice, and desk setup accessories in Bangladesh. Elevate Your Play.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="track.html">Track Order</a></li>
+        <li><a href="account.html">My Account</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Physical Showrooms</h4>
+      <p>📍 Multiplan Center, Elephant Road, Dhaka</p>
+      <p>📞 Hotline: 01819-940370</p>
+      <p>📧 Support: support@nexusgear.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container flex-between">
+      <p>&copy; 2026 Nexus Gear. All rights reserved.</p>
+      <div class="payment-icons">
+        <span>💳 VISA</span>
+        <span>💳 Mastercard</span>
+        <span>💰 Cash on Delivery</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <!-- Slide-out Cart Drawer -->
+<div class="cart-drawer-overlay" id="cart-overlay"></div>
+<aside class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <h3>Shopping Cart (<span id="drawer-cart-count">0</span>)</h3>
+    <button class="close-btn" id="close-cart"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <p class="empty-msg">Your cart is empty.</p>
+  </div>
+  <div class="cart-footer">
+    <div class="subtotal">
+      <span>Subtotal:</span>
+      <strong id="cart-subtotal">৳ 0.00</strong>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="proceedToCheckout()">Checkout</button>
+  </div>
+</aside>
+
+  <!-- Floating Chatbot Interactive Widget Button -->
+  <button class="floating-chat-toggle" id="chat-toggle" aria-label="Open Support Chat">
+    <i class="fa-solid fa-comments"></i>
+  </button>
+
+  <!-- Floating Chatbot Panel -->
+  <div class="chat-widget-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-title">
+        <span>🤖</span>
+        <div>
+          <h4>EZ Assistant</h4>
+          <small>Online — Ready to help</small>
+        </div>
+      </div>
+      <button id="chat-close" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg bot-msg">Hello! Welcome to GG EZ Gadgets. How can I help you today?</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chat-input" placeholder="Ask about products, stock, warranty...">
+      <button id="chat-send"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

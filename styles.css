@@ -54,9 +54,11 @@ button {
 }
 
 .container {
-  max-width: 1280px;
+  width: 100%;
+  max-width: 1200px; /* or whatever your max desktop width is */
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px; /* adds breathing room on phone edges */
+  box-sizing: border-box;
 }
 
 .section {
@@ -110,9 +112,9 @@ button {
 }
 
 .nav-container {
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -428,12 +430,12 @@ button {
 /* ==========================================================================
    5. PRODUCT CARDS & GRID
    ========================================================================== */
-.product-grid {
+/* Flexible grid that wraps automatically on smaller screens */
+.product-grid, .footer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
-
 .product-card {
   background: var(--bg-card);
   border-radius: var(--radius-md);
@@ -868,4 +870,34 @@ button {
   color: #fff;
   padding: 0 14px;
   border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  /* Stack split layouts into single column */
+  .hero-container, 
+  .account-layout, 
+  .checkout-layout,
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  /* Compact header & search bar on mobile */
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .search-box {
+    max-width: 160px;
+  }
+
+  /* Make sure images scale down nicely */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Adjust typography so titles don't overflow small screens */
+  h1 { font-size: 1.6rem !important; }
+  h2 { font-size: 1.3rem !important; }
 }

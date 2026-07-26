@@ -518,7 +518,6 @@ function handleAccountClick(e) {
     window.location.href = 'user-auth.html';
   }
 }
-// Toggle Mobile 3-Dot Navigation Menu
 function toggleMobileMenu() {
   const dropdown = document.getElementById('mobile-nav-dropdown');
   if (dropdown) {

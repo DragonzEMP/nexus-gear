@@ -31,46 +31,64 @@
     </div>
   </div>
 
-  <!-- Main Navigation Bar -->
-  <header class="navbar">
-    <div class="nav-container">
-      <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR.</a>
+<!-- Main Navigation Bar -->
+<header class="navbar">
+  <div class="nav-container" style="position: relative;">
+    <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR.</a>
 
-      <!-- Category Menu -->
-      <nav class="nav-links">
-        <a href="#hero" class="active">Home</a>
-        <a href="#categories">Categories</a>
-        <a href="#new-arrivals">New Trends</a>
-        <a href="#featured">Featured</a>
-        <a href="admin.html" id="admin-nav-link" class="admin-badge">⚡ Admin Panel</a>
-        <a href="track.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;">
-          <i class="fa-solid fa-location-dot" style="color: var(--accent-purple);"></i> Track Order
-         </a>
-      </nav>
+    <!-- Category Menu (Desktop view) -->
+    <nav class="nav-links">
+      <a href="#hero" class="active">Home</a>
+      <a href="#categories">Categories</a>
+      <a href="#new-arrivals">New Trends</a>
+      <a href="#featured">Featured</a>
+      <a href="admin.html" id="admin-nav-link" class="admin-badge">⚡ Admin Panel</a>
+      <a href="track.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+        <i class="fa-solid fa-location-dot" style="color: var(--accent-purple);"></i> Track Order
+      </a>
+    </nav>
 
-      <!-- Header Search & Cart Actions -->
-      <div class="nav-actions">
-  <!-- Live Search Box with Dropdown -->
-  <div class="search-box" style="position: relative;">
-    <input type="text" id="site-search-input" placeholder="Search keyboards, mice, monitors...">
-    <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <!-- Header Search & Cart Actions -->
+    <div class="nav-actions">
+      <!-- Live Search Box with Dropdown -->
+      <div class="search-box" style="position: relative;">
+        <input type="text" id="site-search-input" placeholder="Search keyboards, mice, monitors...">
+        <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
 
-    <!-- Dropdown for live search results -->
-    <div id="search-results-dropdown" style="display: none; position: absolute; top: 110%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; max-height: 350px; overflow-y: auto; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 8px 0;">
+        <!-- Dropdown for live search results -->
+        <div id="search-results-dropdown" style="display: none; position: absolute; top: 110%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; max-height: 350px; overflow-y: auto; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 8px 0;">
+        </div>
+      </div>
+
+      <!-- CUSTOMER ACCOUNT BUTTON -->
+      <a href="#" onclick="handleAccountClick(event)" class="icon-btn" aria-label="Account" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+        <i class="fa-solid fa-user"></i>
+      </a>
+
+      <!-- CART BUTTON -->
+      <button class="icon-btn cart-btn" id="cart-btn" aria-label="Open Cart">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="cart-badge" id="cart-count">0</span>
+      </button>
+
+      <!-- MOBILE 3-DOT TOGGLE BUTTON (Visible only on phone screens) -->
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle Menu">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
     </div>
+
+    <!-- MOBILE SLIDE-DOWN DROPDOWN MENU -->
+    <div id="mobile-nav-dropdown" class="mobile-dropdown">
+      <a href="#hero" onclick="toggleMobileMenu()"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="#categories" onclick="toggleMobileMenu()"><i class="fa-solid fa-layer-group"></i> Categories</a>
+      <a href="#new-arrivals" onclick="toggleMobileMenu()"><i class="fa-solid fa-fire"></i> New Trends</a>
+      <a href="#featured" onclick="toggleMobileMenu()"><i class="fa-solid fa-star"></i> Featured</a>
+      <a href="track.html" onclick="toggleMobileMenu()"><i class="fa-solid fa-location-dot" style="color: var(--accent-purple);"></i> Track Order</a>
+      <a href="admin.html" onclick="toggleMobileMenu()" style="color: var(--accent-yellow); font-weight: 700;">⚡ Admin Panel</a>
+    </div>
+
   </div>
-  <!-- CUSTOMER ACCOUNT BUTTON (ADD / UPDATE THIS HERE) -->
-  <a href="#" onclick="handleAccountClick(event)" class="icon-btn" aria-label="Account" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
-    <i class="fa-solid fa-user"></i>
-  </a>
-
-  <button class="icon-btn cart-btn" id="cart-btn" aria-label="Open Cart">
-    <i class="fa-solid fa-bag-shopping"></i>
-    <span class="cart-badge" id="cart-count">0</span>
-  </button>
-</div>
-    </div>
-  </header>
+</header>
 
   <!-- Hero Section with Promo Grid -->
   <section id="hero" class="hero-section">

@@ -926,3 +926,76 @@ button {
     width: 100% !important;
   }
 }
+
+/* ==========================================
+   MOBILE MENU & DESKTOP HEADER HARMONY
+   ========================================== */
+
+/* Hide mobile toggle button on Desktop */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Mobile Dropdown Styling */
+.mobile-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #11131e;
+  border-bottom: 1px solid var(--border-color);
+  padding: 15px 20px;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+.mobile-dropdown.active {
+  display: flex !important;
+}
+
+.mobile-dropdown a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* SCREEN ADJUSTMENTS FOR PHONES (MAX-WIDTH 768PX) */
+@media screen and (max-width: 768px) {
+  /* Hide static desktop nav links on phone screens */
+  .nav-links {
+    display: none !important;
+  }
+
+  /* Show 3-dot toggle button on phones */
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Keep search input compact on mobile header */
+  .search-box {
+    max-width: 120px !important;
+  }
+
+  .search-box input {
+    font-size: 0.75rem !important;
+    padding: 6px 8px !important;
+  }
+}

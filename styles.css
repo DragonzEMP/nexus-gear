@@ -976,47 +976,100 @@ button {
 }
 
 /* ==========================================================================
-   ULTIMATE MOBILE HEADER FIX
+   PERFECT MOBILE HEADER & WORKING DROPDOWN MENU
    ========================================================================== */
+
+/* Dropdown Base Styles */
+.mobile-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #0f111a !important;
+  border: 1px solid var(--border-color);
+  border-radius: 0 0 16px 16px;
+  padding: 16px 20px;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999999 !important; /* Floats above all hero banners and content */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+}
+
+.mobile-dropdown.active {
+  display: flex !important;
+}
+
+.mobile-dropdown a {
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 @media screen and (max-width: 768px) {
-  /* 1. Stop the search bar from hogging all the space */
-  .search-box {
-    width: 110px !important; /* Shrinks the bar significantly */
-    max-width: 110px !important;
-    flex-shrink: 1 !important; 
-  }
-  
-  .search-box input {
-    padding: 6px 8px !important;
-    font-size: 0.7rem !important;
+  /* Prevent horizontal header overflow */
+  .navbar, .nav-container {
+    padding: 8px 12px !important;
+    position: relative !important;
+    z-index: 10000 !important;
   }
 
-  /* 2. Force the action container to stay on ONE line */
+  /* Shrink Logo slightly on phones to save space */
+  .brand-logo {
+    font-size: 1.2rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Hide Desktop Links */
+  .nav-links {
+    display: none !important;
+  }
+
   .nav-actions {
     display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 6px !important;
     width: auto !important;
-    justify-content: flex-end !important;
   }
 
-  /* 3. Force the missing icons to stay visible and NOT shrink away */
-  .icon-btn, .mobile-menu-btn {
+  /* Compact Search Bar so icons fit */
+  .search-box {
+    width: 90px !important;
+    min-width: 80px !important;
+    max-width: 100px !important;
+    flex-shrink: 1 !important;
+  }
+
+  .search-box input {
+    font-size: 0.7rem !important;
+    padding: 4px 6px !important;
+    height: 30px !important;
+  }
+
+  /* Make sure Action Icons & 3-Dot Button fit on screen */
+  .icon-btn {
+    padding: 4px !important;
+    font-size: 0.85rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .mobile-menu-btn {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    flex-shrink: 0 !important; /* Prevents icons from being squished out of existence */
-    padding: 6px !important;
-    margin: 0 !important;
-  }
-
-  /* Ensure the 3-dot menu shows up */
-  .mobile-menu-btn {
     background: transparent !important;
     border: none !important;
+    color: #ffffff !important;
     font-size: 1.2rem !important;
-    color: #fff !important;
+    padding: 4px 8px !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    flex-shrink: 0 !important;
   }
 }

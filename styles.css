@@ -976,100 +976,150 @@ button {
 }
 
 /* ==========================================================================
-   PERFECT MOBILE HEADER & WORKING DROPDOWN MENU
+   FLUID SCALING OVERRIDES (DESKTOP LAYOUT ON ALL DEVICES)
    ========================================================================== */
 
-/* Dropdown Base Styles */
-.mobile-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #0f111a !important;
-  border: 1px solid var(--border-color);
-  border-radius: 0 0 16px 16px;
-  padding: 16px 20px;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 999999 !important; /* Floats above all hero banners and content */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
-}
-
-.mobile-dropdown.active {
+/* Header Row setup */
+.nav-container {
   display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  padding: 10px 16px !important;
+  gap: 8px !important;
+  box-sizing: border-box !important;
 }
 
-.mobile-dropdown a {
-  color: #ffffff !important;
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+.nav-links {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
 
+.nav-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Footer Row setup */
+.footer-grid {
+  display: grid !important;
+  grid-template-columns: 1.5fr 1fr 1.2fr !important; /* Forces 3 columns side-by-side */
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+/* Mobile Screen Fluid Scaling (max-width: 768px) */
 @media screen and (max-width: 768px) {
-  /* Prevent horizontal header overflow */
-  .navbar, .nav-container {
-    padding: 8px 12px !important;
-    position: relative !important;
-    z-index: 10000 !important;
-  }
-
-  /* Shrink Logo slightly on phones to save space */
+  /* Scale down header fonts & spacing to fit phone screen */
   .brand-logo {
-    font-size: 1.2rem !important;
-    flex-shrink: 0 !important;
+    font-size: 0.95rem !important;
   }
 
-  /* Hide Desktop Links */
-  .nav-links {
-    display: none !important;
+  .nav-links a {
+    font-size: 0.65rem !important;
+    padding: 2px 4px !important;
   }
 
-  .nav-actions {
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    width: auto !important;
-  }
-
-  /* Compact Search Bar so icons fit */
   .search-box {
-    width: 90px !important;
-    min-width: 80px !important;
-    max-width: 100px !important;
-    flex-shrink: 1 !important;
+    width: 80px !important;
   }
 
   .search-box input {
-    font-size: 0.7rem !important;
-    padding: 4px 6px !important;
-    height: 30px !important;
+    font-size: 0.6rem !important;
+    padding: 3px 6px !important;
+    height: 26px !important;
   }
 
-  /* Make sure Action Icons & 3-Dot Button fit on screen */
   .icon-btn {
-    padding: 4px !important;
-    font-size: 0.85rem !important;
-    flex-shrink: 0 !important;
+    padding: 3px !important;
+    font-size: 0.75rem !important;
   }
 
-  .mobile-menu-btn {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: transparent !important;
-    border: none !important;
-    color: #ffffff !important;
-    font-size: 1.2rem !important;
-    padding: 4px 8px !important;
-    cursor: pointer !important;
-    pointer-events: auto !important;
-    flex-shrink: 0 !important;
+  /* Scale down footer text & icons for small screens */
+  .site-footer {
+    padding: 20px 10px !important;
+  }
+
+  .footer-col h4 {
+    font-size: 0.75rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  .footer-col p, .footer-col a, .footer-col li {
+    font-size: 0.6rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .footer-desc {
+    font-size: 0.58rem !important;
+  }
+}
+
+/* ==========================================================================
+   EXACT FOOTER SCALING & LAYOUT STYLES
+   ========================================================================== */
+
+.site-footer {
+  background-color: #0b0d14;
+  border-top: 1px solid var(--border-color);
+  padding-top: 30px;
+  color: var(--text-muted);
+}
+
+.footer-grid {
+  display: grid !important;
+  grid-template-columns: 1.5fr 1fr 1.2fr !important;
+  gap: 20px !important;
+  width: 100% !important;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 15px 0;
+  margin-top: 25px;
+  font-size: 0.85rem;
+}
+
+.flex-between {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 10px !important;
+}
+
+.payment-icons span {
+  margin-left: 8px;
+  font-size: 0.8rem;
+}
+
+/* Mobile Screen Scaling Rules */
+@media screen and (max-width: 768px) {
+  .footer-grid {
+    gap: 10px !important;
+  }
+
+  .footer-about p, 
+  .footer-links ul li a, 
+  .footer-contact p {
+    font-size: 0.62rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .footer-links h4, 
+  .footer-contact h4 {
+    font-size: 0.75rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  .footer-bottom p {
+    font-size: 0.58rem !important;
+  }
+
+  .payment-icons span {
+    font-size: 0.55rem !important;
+    margin-left: 4px !important;
   }
 }

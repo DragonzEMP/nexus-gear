@@ -32,61 +32,40 @@
   </div>
 
 <!-- Main Navigation Bar -->
+<!-- Main Navigation Bar (Always Full Desktop Layout) -->
 <header class="navbar">
-  <div class="nav-container" style="position: relative;">
+  <div class="nav-container">
     <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR.</a>
 
-    <!-- Category Menu (Desktop view) -->
+    <!-- Category Menu -->
     <nav class="nav-links">
       <a href="#hero" class="active">Home</a>
       <a href="#categories">Categories</a>
-      <a href="#new-arrivals">New Trends</a>
+      <a href="#new-arrivals">Trends</a>
       <a href="#featured">Featured</a>
-      <a href="admin.html" id="admin-nav-link" class="admin-badge">⚡ Admin Panel</a>
-      <a href="track.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;">
-        <i class="fa-solid fa-location-dot" style="color: var(--accent-purple);"></i> Track Order
+      <a href="admin.html" id="admin-nav-link" class="admin-badge">⚡ Admin</a>
+      <a href="track.html" class="track-link">
+        <i class="fa-solid fa-location-dot"></i> Track
       </a>
     </nav>
 
-    <!-- Header Search & Cart Actions -->
+    <!-- Search & User Actions -->
     <div class="nav-actions">
-      <!-- Live Search Box with Dropdown -->
-      <div class="search-box" style="position: relative;">
-        <input type="text" id="site-search-input" placeholder="Search keyboards, mice, monitors...">
+      <div class="search-box">
+        <input type="text" id="site-search-input" placeholder="Search...">
         <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-
-        <!-- Dropdown for live search results -->
-        <div id="search-results-dropdown" style="display: none; position: absolute; top: 110%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; max-height: 350px; overflow-y: auto; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 8px 0;">
-        </div>
+        <div id="search-results-dropdown" style="display: none;"></div>
       </div>
 
-      <!-- CUSTOMER ACCOUNT BUTTON -->
-      <a href="#" onclick="handleAccountClick(event)" class="icon-btn" aria-label="Account" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+      <a href="#" onclick="handleAccountClick(event)" class="icon-btn" aria-label="Account">
         <i class="fa-solid fa-user"></i>
       </a>
 
-      <!-- CART BUTTON -->
       <button class="icon-btn cart-btn" id="cart-btn" aria-label="Open Cart">
         <i class="fa-solid fa-bag-shopping"></i>
         <span class="cart-badge" id="cart-count">0</span>
       </button>
-
-      <!-- MOBILE 3-DOT TOGGLE BUTTON (Visible only on phone screens) -->
-     <!-- MOBILE 3-DOT TOGGLE BUTTON (Visible only on phone screens) -->
-      <button class="mobile-menu-btn" onclick="toggleMobileMenu(event)" aria-label="Toggle Menu">
-        <i class="fa-solid fa-ellipsis-vertical"></i>
-      </button>
-     </div>
-    <!-- MOBILE SLIDE-DOWN DROPDOWN MENU -->
-    <div id="mobile-nav-dropdown" class="mobile-dropdown">
-      <a href="#hero" onclick="toggleMobileMenu(event)"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="#categories" onclick="toggleMobileMenu(event)"><i class="fa-solid fa-layer-group"></i> Categories</a>
-      <a href="#new-arrivals" onclick="toggleMobileMenu(event)"><i class="fa-solid fa-fire"></i> New Trends</a>
-      <a href="#featured" onclick="toggleMobileMenu(event)"><i class="fa-solid fa-star"></i> Featured</a>
-      <a href="track.html" onclick="toggleMobileMenu(event)"><i class="fa-solid fa-location-dot" style="color: var(--accent-purple);"></i> Track Order</a>
-      <a href="admin.html" onclick="toggleMobileMenu(event)" style="color: var(--accent-yellow); font-weight: 700;">⚡ Admin Panel</a>
     </div>
-
   </div>
 </header>
 
@@ -250,7 +229,7 @@
   </div>
   <div class="footer-bottom">
     <div class="container flex-between">
-      <p>&copy; 2026 Nexus Gear. All rights reserved.</p>
+      <p>&copy; 2026 Nexus Gear. All rights reserved. | Designed & Developed by <strong>DragonzEMP</strong></p>
       <div class="payment-icons">
         <span>💳 VISA</span>
         <span>💳 Mastercard</span>

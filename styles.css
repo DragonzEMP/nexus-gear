@@ -1,3 +1,17 @@
+
+/* FORCE ALL CONTAINERS TO REMAIN WITHIN SCREEN BOUNDS */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100% !important;
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+  margin: 0;
+  padding: 0;
+}
+
 /* ==========================================================================
    1. DESIGN SYSTEM & VARIABLES
    ========================================================================== */
@@ -872,32 +886,43 @@ button {
   border-radius: 6px;
 }
 
-@media (max-width: 768px) {
-  /* Stack split layouts into single column */
-  .hero-container, 
-  .account-layout, 
-  .checkout-layout,
-  .footer-grid {
-    grid-template-columns: 1fr !important;
-    gap: 20px;
+
+
+
+/* ==========================================
+   STRICT MOBILE RESPONSIVE OVERRIDES
+   ========================================== */
+@media screen and (max-width: 768px) {
+  /* Prevent horizontal header overflow */
+  header, nav, .navbar, .top-bar {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
   }
 
-  /* Compact header & search bar on mobile */
-  .nav-actions {
-    gap: 8px;
+  /* Hide long navigation links on mobile */
+  .nav-links, .nav-menu {
+    display: none !important;
   }
 
+  /* Keep search bar compact on phone */
   .search-box {
-    max-width: 160px;
+    max-width: 140px !important;
   }
 
-  /* Make sure images scale down nicely */
-  img {
-    max-width: 100%;
-    height: auto;
+  /* Category grid: 3 columns x 2 rows on mobile */
+  .category-grid, .categories-grid, #categories-container {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
   }
 
-  /* Adjust typography so titles don't overflow small screens */
-  h1 { font-size: 1.6rem !important; }
-  h2 { font-size: 1.3rem !important; }
+  /* Product grid: 2 columns on mobile */
+  .product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
 }

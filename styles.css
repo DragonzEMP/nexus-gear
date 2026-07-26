@@ -975,27 +975,48 @@ button {
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* SCREEN ADJUSTMENTS FOR PHONES (MAX-WIDTH 768PX) */
+/* ==========================================================================
+   ULTIMATE MOBILE HEADER FIX
+   ========================================================================== */
 @media screen and (max-width: 768px) {
-  /* Hide static desktop nav links on phone screens */
-  .nav-links {
-    display: none !important;
-  }
-
-  /* Show 3-dot toggle button on phones */
-  .mobile-menu-btn {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Keep search input compact on mobile header */
+  /* 1. Stop the search bar from hogging all the space */
   .search-box {
-    max-width: 120px !important;
+    width: 110px !important; /* Shrinks the bar significantly */
+    max-width: 110px !important;
+    flex-shrink: 1 !important; 
+  }
+  
+  .search-box input {
+    padding: 6px 8px !important;
+    font-size: 0.7rem !important;
   }
 
-  .search-box input {
-    font-size: 0.75rem !important;
-    padding: 6px 8px !important;
+  /* 2. Force the action container to stay on ONE line */
+  .nav-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: auto !important;
+    justify-content: flex-end !important;
+  }
+
+  /* 3. Force the missing icons to stay visible and NOT shrink away */
+  .icon-btn, .mobile-menu-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important; /* Prevents icons from being squished out of existence */
+    padding: 6px !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure the 3-dot menu shows up */
+  .mobile-menu-btn {
+    background: transparent !important;
+    border: none !important;
+    font-size: 1.2rem !important;
+    color: #fff !important;
   }
 }

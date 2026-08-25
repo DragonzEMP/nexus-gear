@@ -32,5 +32,21 @@
     "specifications": "Brand: 8BitDo\nCompatibility: Windows, Android\nConnection type: 2.4G Wireless & Wired\nStick polling rate: 1000Hz",
     "isNew": true,
     "isFeatured": true
+  },
+  {
+    "id": 1786887994268,
+    "name": "Fantech GO K211 Bangla Keyboard",
+    "category": "Keyboards",
+    "brand": "Fantech",
+    "price": 400,
+    "tag": "",
+    "isNew": true,
+    "isFeatured": true,
+    "image": "https://www.startech.com.bd/image/cache/catalog/keyboard/fantech/go-k211/go-k211-01-500x500.webp",
+    "images": [
+      "https://www.startech.com.bd/image/cache/catalog/keyboard/fantech/go-k211/go-k211-01-500x500.webp"
+    ],
+    "description": "",
+    "specifications": ""
   }
 ]

@@ -1,7 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const fs = require('fs');
+const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,231 +11,267 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
-const PRODUCTS_FILE = path.join(__dirname, 'products.json');
-const ORDERS_FILE = path.join(__dirname, 'orders.json');
-const USERS_FILE = path.join(__dirname, 'users.json');
+// MongoDB Connection
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/nexus-gear";
+mongoose.connect(MONGO_URI)
+  .then(() => console.log('✅ Connected to MongoDB successfully!'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// Helper: Read JSON file safely
-function readJSON(filePath, fallbackData = []) {
+// ==========================================================================
+// Mongoose Models
+// ==========================================================================
+
+const ProductSchema = new mongoose.Schema({
+  id: { type: Number, required: true, unique: true },
+  name: String,
+  category: String,
+  brand: String,
+  price: Number,
+  originalPrice: Number,
+  tag: String,
+  image: String,
+  images: [String],
+  description: String,
+  specifications: String,
+  isNew: Boolean,
+  isFeatured: Boolean
+});
+const Product = mongoose.model('Product', ProductSchema);
+
+const OrderSchema = new mongoose.Schema({
+  id: { type: Number, required: true, unique: true },
+  customer: String,
+  phone: String,
+  address: String,
+  items: [Object],
+  total: Number,
+  status: String,
+  date: String
+});
+const Order = mongoose.model('Order', OrderSchema);
+
+const UserSchema = new mongoose.Schema({
+  id: { type: Number, required: true, unique: true },
+  name: String,
+  phone: { type: String, unique: true },
+  address: String,
+  pass: String
+});
+const User = mongoose.model('User', UserSchema);
+
+// ==========================================================================
+// 1. PRODUCT ROUTES
+// ==========================================================================
+
+app.get('/api/products', async (req, res) => {
   try {
-    if (!fs.existsSync(filePath)) {
-      fs.writeFileSync(filePath, JSON.stringify(fallbackData, null, 2));
-      return fallbackData;
+    const products = await Product.find().sort({ id: -1 });
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.post('/api/products', async (req, res) => {
+  try {
+    const imagesArray = req.body.images && req.body.images.length > 0 
+      ? req.body.images 
+      : [req.body.image];
+
+    const newProduct = new Product({
+      id: Date.now(),
+      name: req.body.name,
+      category: req.body.category,
+      brand: req.body.brand || '',
+      price: parseFloat(req.body.price),
+      tag: req.body.tag || '',
+      isNew: req.body.isNew === true,
+      isFeatured: req.body.isFeatured === true,
+      image: imagesArray[0] || '',
+      images: imagesArray,
+      description: req.body.description || '',
+      specifications: req.body.specifications || ''
+    });
+
+    await newProduct.save();
+    res.status(201).json({ success: true, product: newProduct });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.put('/api/products/:id', async (req, res) => {
+  try {
+    const productId = parseInt(req.params.id, 10);
+    const imagesArray = req.body.images && req.body.images.length > 0 
+      ? req.body.images 
+      : [req.body.image];
+
+    const updatedData = {
+      name: req.body.name,
+      category: req.body.category,
+      brand: req.body.brand || '',
+      price: parseFloat(req.body.price),
+      tag: req.body.tag || '',
+      isNew: req.body.isNew === true,
+      isFeatured: req.body.isFeatured === true,
+      image: imagesArray[0] || '',
+      images: imagesArray,
+      description: req.body.description || '',
+      specifications: req.body.specifications || ''
+    };
+
+    const product = await Product.findOneAndUpdate({ id: productId }, updatedData, { new: true });
+    
+    if (!product) {
+      return res.status(404).json({ success: false, message: "Product not found" });
     }
-    const data = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(data);
+    res.json({ success: true, product });
   } catch (err) {
-    console.error(`Error reading ${filePath}:`, err);
-    return fallbackData;
+    res.status(500).json({ success: false, message: err.message });
   }
-}
+});
 
-// Helper: Write JSON file safely
-function writeJSON(filePath, data) {
+app.delete('/api/products/:id', async (req, res) => {
   try {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    const productId = parseInt(req.params.id, 10);
+    await Product.findOneAndDelete({ id: productId });
+    res.json({ success: true, message: 'Product deleted successfully' });
   } catch (err) {
-    console.error(`Error writing ${filePath}:`, err);
-  }
-}
-
-// ==========================================================================
-// 1. PRODUCT ROUTES (FILE BACKED)
-// ==========================================================================
-
-// GET: Fetch products
-app.get('/api/products', (req, res) => {
-  const products = readJSON(PRODUCTS_FILE);
-  res.json(products);
-});
-
-// POST: Add new product
-app.post('/api/products', (req, res) => {
-  const products = readJSON(PRODUCTS_FILE);
-  const imagesArray = req.body.images && req.body.images.length > 0 
-    ? req.body.images 
-    : [req.body.image];
-
-  const newProduct = {
-    id: Date.now(),
-    name: req.body.name,
-    category: req.body.category,
-    brand: req.body.brand || '',
-    price: parseFloat(req.body.price),
-    tag: req.body.tag || '',
-    isNew: req.body.isNew === true,           // <--- Added boolean flag
-    isFeatured: req.body.isFeatured === true, // <--- Added boolean flag
-    image: imagesArray[0] || '',
-    images: imagesArray,
-    description: req.body.description || '',
-    specifications: req.body.specifications || ''
-  };
-
-  products.push(newProduct);
-  writeJSON(PRODUCTS_FILE, products);
-  res.status(201).json({ success: true, product: newProduct });
-});
-
-// PUT: Edit existing product
-app.put('/api/products/:id', (req, res) => {
-  const products = readJSON(PRODUCTS_FILE);
-  const productId = parseInt(req.params.id, 10);
-  const index = products.findIndex(p => p.id === productId);
-
-  if (index === -1) {
-    return res.status(404).json({ success: false, message: "Product not found" });
-  }
-
-  const imagesArray = req.body.images && req.body.images.length > 0 
-    ? req.body.images 
-    : [req.body.image];
-
-  products[index] = {
-    ...products[index],
-    name: req.body.name,
-    category: req.body.category,
-    brand: req.body.brand || '',
-    price: parseFloat(req.body.price),
-    tag: req.body.tag || '',
-    isNew: req.body.isNew === true,           // <--- Added boolean flag
-    isFeatured: req.body.isFeatured === true, // <--- Added boolean flag
-    image: imagesArray[0] || '',
-    images: imagesArray,
-    description: req.body.description || '',
-    specifications: req.body.specifications || ''
-  };
-
-  writeJSON(PRODUCTS_FILE, products);
-  res.json({ success: true, product: products[index] });
-});
-
-// DELETE: Remove product
-app.delete('/api/products/:id', (req, res) => {
-  let products = readJSON(PRODUCTS_FILE);
-  const productId = parseInt(req.params.id, 10);
-  products = products.filter(p => p.id !== productId);
-  
-  writeJSON(PRODUCTS_FILE, products);
-  res.json({ success: true, message: 'Product deleted successfully' });
-});
-
-// ==========================================================================
-// 2. ORDER ROUTES (FILE BACKED)
-// ==========================================================================
-
-// GET: Fetch orders
-app.get('/api/orders', (req, res) => {
-  const orders = readJSON(ORDERS_FILE);
-  res.json(orders);
-});
-
-// GET: Fetch single order by ID or Phone for tracking
-app.get('/api/orders/track', (req, res) => {
-  const orders = readJSON(ORDERS_FILE);
-  const { query } = req.query;
-
-  if (!query) {
-    return res.status(400).json({ success: false, message: "Please provide an Order ID or Phone number." });
-  }
-
-  const cleanQuery = query.toString().trim().replace('#', '');
-
-  const results = orders.filter(o => 
-    o.id.toString() === cleanQuery || 
-    (o.phone && o.phone.trim() === cleanQuery)
-  );
-
-  if (results.length > 0) {
-    res.json({ success: true, orders: results });
-  } else {
-    res.status(404).json({ success: false, message: "No orders found matching your search." });
-  }
-});
-
-// GET: Fetch orders for a specific customer by phone number (ADD THIS ROUTE HERE)
-app.get('/api/orders/user/:phone', (req, res) => {
-  const orders = readJSON(ORDERS_FILE);
-  const userPhone = req.params.phone.trim();
-
-  const userOrders = orders.filter(o => o.phone && o.phone.trim() === userPhone);
-  res.json({ success: true, orders: userOrders });
-});
-
-// POST: Create a new order (from Checkout page)
-app.post('/api/orders', (req, res) => {
-  const orders = readJSON(ORDERS_FILE);
-
-  const newOrder = {
-    id: Date.now(),
-    customer: req.body.customer,
-    phone: req.body.phone,
-    address: req.body.address || '',
-    items: req.body.items,
-    total: parseFloat(req.body.total),
-    status: "Pending",
-    date: req.body.date || new Date().toISOString().split('T')[0]
-  };
-
-  orders.push(newOrder);
-  writeJSON(ORDERS_FILE, orders);
-  res.status(201).json({ success: true, order: newOrder });
-});
-
-// POST: Update order status (from Admin page)
-app.post('/api/orders/:id/status', (req, res) => {
-  const orders = readJSON(ORDERS_FILE);
-  const orderId = parseInt(req.params.id, 10);
-  const { status } = req.body;
-  const order = orders.find(o => o.id === orderId);
-
-  if (order) {
-    order.status = status;
-    writeJSON(ORDERS_FILE, orders);
-    res.json({ success: true, order });
-  } else {
-    res.status(404).json({ success: false, message: "Order not found" });
+    res.status(500).json({ success: false, message: err.message });
   }
 });
 
 // ==========================================================================
-// 3. USER AUTHENTICATION ROUTES (FILE BACKED)
+// 2. ORDER ROUTES
 // ==========================================================================
 
-// POST: Register User
-app.post('/api/register', (req, res) => {
-  const users = readJSON(USERS_FILE);
-  const { name, phone, address, pass } = req.body;
-
-  const existingUser = users.find(u => u.phone === phone);
-  if (existingUser) {
-    return res.status(400).json({ success: false, message: 'An account with this phone number already exists.' });
+app.get('/api/orders', async (req, res) => {
+  try {
+    const orders = await Order.find().sort({ id: -1 });
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
   }
-
-  const newUser = {
-    id: Date.now(),
-    name,
-    phone,
-    address,
-    pass
-  };
-
-  users.push(newUser);
-  writeJSON(USERS_FILE, users);
-
-  res.status(201).json({ success: true, user: { name: newUser.name, phone: newUser.phone, address: newUser.address } });
 });
 
-// POST: Login User
-app.post('/api/login', (req, res) => {
-  const users = readJSON(USERS_FILE);
-  const { phone, pass } = req.body;
+app.get('/api/orders/track', async (req, res) => {
+  try {
+    const { query } = req.query;
+    if (!query) return res.status(400).json({ success: false, message: "Please provide an Order ID or Phone number." });
 
-  const user = users.find(u => u.phone === phone && u.pass === pass);
-  if (!user) {
-    return res.status(401).json({ success: false, message: 'Invalid phone number or password.' });
+    const cleanQuery = query.toString().trim().replace('#', '');
+    const isId = !isNaN(cleanQuery) && cleanQuery.length > 4;
+
+    const orders = await Order.find({
+      $or: [
+        { id: isId ? parseInt(cleanQuery, 10) : -1 },
+        { phone: cleanQuery }
+      ]
+    });
+
+    if (orders.length > 0) {
+      res.json({ success: true, orders });
+    } else {
+      res.status(404).json({ success: false, message: "No orders found matching your search." });
+    }
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
   }
+});
 
-  res.json({ success: true, user: { name: user.name, phone: user.phone, address: user.address } });
+app.get('/api/orders/user/:phone', async (req, res) => {
+  try {
+    const userPhone = req.params.phone.trim();
+    const orders = await Order.find({ phone: userPhone }).sort({ id: -1 });
+    res.json({ success: true, orders });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.post('/api/orders', async (req, res) => {
+  try {
+    const newOrder = new Order({
+      id: Date.now(),
+      customer: req.body.customer,
+      phone: req.body.phone,
+      address: req.body.address || '',
+      items: req.body.items,
+      total: parseFloat(req.body.total),
+      status: "Pending",
+      date: req.body.date || new Date().toISOString().split('T')[0]
+    });
+
+    await newOrder.save();
+    res.status(201).json({ success: true, order: newOrder });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.post('/api/orders/:id/status', async (req, res) => {
+  try {
+    const orderId = parseInt(req.params.id, 10);
+    const { status } = req.body;
+    
+    const order = await Order.findOneAndUpdate(
+      { id: orderId },
+      { status },
+      { new: true }
+    );
+
+    if (order) {
+      res.json({ success: true, order });
+    } else {
+      res.status(404).json({ success: false, message: "Order not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// ==========================================================================
+// 3. USER AUTHENTICATION ROUTES
+// ==========================================================================
+
+app.post('/api/register', async (req, res) => {
+  try {
+    const { name, phone, address, pass } = req.body;
+
+    const existingUser = await User.findOne({ phone });
+    if (existingUser) {
+      return res.status(400).json({ success: false, message: 'An account with this phone number already exists.' });
+    }
+
+    const newUser = new User({
+      id: Date.now(),
+      name,
+      phone,
+      address,
+      pass
+    });
+
+    await newUser.save();
+    res.status(201).json({ success: true, user: { name: newUser.name, phone: newUser.phone, address: newUser.address } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.post('/api/login', async (req, res) => {
+  try {
+    const { phone, pass } = req.body;
+
+    const user = await User.findOne({ phone, pass });
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'Invalid phone number or password.' });
+    }
+
+    res.json({ success: true, user: { name: user.name, phone: user.phone, address: user.address } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 });
 
 // ==========================================================================

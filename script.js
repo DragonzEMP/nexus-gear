@@ -9,7 +9,7 @@ const defaultProducts = [
     price: 5250,
     originalPrice: 5999,
     tag: "NEW",
-    isNew: true,
+    isNewItem: true,
     isFeatured: true,
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80"
   },
@@ -20,7 +20,7 @@ const defaultProducts = [
     price: 2799,
     originalPrice: 3200,
     tag: "HOT",
-    isNew: false,
+    isNewItem: false,
     isFeatured: true,
     image: "https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?auto=format&fit=crop&w=500&q=80"
   },
@@ -31,7 +31,7 @@ const defaultProducts = [
     price: 2099,
     originalPrice: 2499,
     tag: "SALE",
-    isNew: true,
+    isNewItem: true,
     isFeatured: false,
     image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=500&q=80"
   },
@@ -42,7 +42,7 @@ const defaultProducts = [
     price: 16000,
     originalPrice: 17500,
     tag: "HOT",
-    isNew: false,
+    isNewItem: false,
     isFeatured: true,
     image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=500&q=80"
   },
@@ -53,7 +53,7 @@ const defaultProducts = [
     price: 75000,
     originalPrice: 82000,
     tag: "PRO",
-    isNew: true,
+    isNewItem: true,
     isFeatured: true,
     image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=500&q=80"
   },
@@ -64,7 +64,7 @@ const defaultProducts = [
     price: 3899,
     originalPrice: 4200,
     tag: "NEW",
-    isNew: true,
+    isNewItem: true,
     isFeatured: false,
     image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=500&q=80"
   }
@@ -118,7 +118,7 @@ async function renderProducts() {
   }
 
   // 1. Filter Trending / New Items
-  const trendingProducts = products.filter(p => p.isNew);
+  const trendingProducts = products.filter(p => p.isNewItem);
   
   // 2. Filter Featured Items
   const featuredProducts = products.filter(p => p.isFeatured);

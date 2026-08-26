@@ -33,7 +33,7 @@ const ProductSchema = new mongoose.Schema({
   images: [String],
   description: String,
   specifications: String,
-  isNew: Boolean,
+  isNewItem: Boolean,
   isFeatured: Boolean
 });
 const Product = mongoose.model('Product', ProductSchema);
@@ -85,7 +85,7 @@ app.post('/api/products', async (req, res) => {
       brand: req.body.brand || '',
       price: parseFloat(req.body.price),
       tag: req.body.tag || '',
-      isNew: req.body.isNew === true,
+      isNewItem: req.body.isNewItem === true,
       isFeatured: req.body.isFeatured === true,
       image: imagesArray[0] || '',
       images: imagesArray,
@@ -113,7 +113,7 @@ app.put('/api/products/:id', async (req, res) => {
       brand: req.body.brand || '',
       price: parseFloat(req.body.price),
       tag: req.body.tag || '',
-      isNew: req.body.isNew === true,
+      isNewItem: req.body.isNewItem === true,
       isFeatured: req.body.isFeatured === true,
       image: imagesArray[0] || '',
       images: imagesArray,

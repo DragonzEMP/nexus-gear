@@ -460,7 +460,7 @@
         image: images[0] || '',
         description: document.getElementById('p-desc').value,
         specifications: document.getElementById('p-spec').value,
-        isNew: document.getElementById('p-is-new').checked,
+        isNewItem: document.getElementById('p-is-new').checked,
         isFeatured: document.getElementById('p-is-featured').checked
       };
 
@@ -496,7 +496,7 @@
       document.getElementById('edit-p-desc').value = p.description || '';
       document.getElementById('edit-p-spec').value = p.specifications || '';
 
-      document.getElementById('edit-p-is-new').checked = p.isNew || false;
+      document.getElementById('edit-p-is-new').checked = p.isNewItem || false;
       document.getElementById('edit-p-is-featured').checked = p.isFeatured || false;
 
       document.getElementById('edit-modal').classList.add('active');
@@ -521,7 +521,7 @@
         image: images[0] || '',
         description: document.getElementById('edit-p-desc').value,
         specifications: document.getElementById('edit-p-spec').value,
-        isNew: document.getElementById('edit-p-is-new').checked,
+        isNewItem: document.getElementById('edit-p-is-new').checked,
         isFeatured: document.getElementById('edit-p-is-featured').checked
       };
 

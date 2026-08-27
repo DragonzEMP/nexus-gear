@@ -85,6 +85,33 @@
   }
   .main-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
+  .thumbnail-list {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-top: 5px;
+  }
+  .thumb-box {
+    width: 75px;
+    height: 75px;
+    border: 2px solid var(--pd-card-border);
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    background: #0a0b10;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .thumb-box:hover, .thumb-box.active {
+    border-color: var(--pd-accent);
+  }
+  .thumb-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   /* Right Column: Information */
   .product-info-col { display: flex; flex-direction: column; }
   .p-title { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 14px; line-height: 1.3; }
@@ -285,6 +312,7 @@
         <div class="main-img-box">
           <img id="pd-main-img" src="" alt="Product Image">
         </div>
+        <div class="thumbnail-list" id="pd-thumbnails"></div>
       </div>
 
       <!-- Product Information -->
@@ -404,6 +432,23 @@
         document.getElementById('pd-category').textContent = currentProduct.category;
         document.getElementById('pd-price').textContent = `৳ ${currentProduct.price.toLocaleString()}`;
         document.getElementById('pd-main-img').src = currentProduct.image;
+
+        // Render thumbnails
+        const thumbContainer = document.getElementById('pd-thumbnails');
+        thumbContainer.innerHTML = '';
+        if (currentProduct.images && currentProduct.images.length > 1) {
+          currentProduct.images.forEach((imgUrl, index) => {
+            const thumb = document.createElement('div');
+            thumb.className = `thumb-box ${index === 0 ? 'active' : ''}`;
+            thumb.innerHTML = `<img src="${imgUrl}" alt="Thumbnail">`;
+            thumb.onclick = () => {
+              document.getElementById('pd-main-img').src = imgUrl;
+              document.querySelectorAll('.thumb-box').forEach(t => t.classList.remove('active'));
+              thumb.classList.add('active');
+            };
+            thumbContainer.appendChild(thumb);
+          });
+        }
 
         // Render Description & Specifications if present later
         // 1. Render Description (Supports <h2>, <h3>, <p>, <strong> tags)

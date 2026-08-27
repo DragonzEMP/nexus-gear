@@ -351,6 +351,24 @@ async function loadCategoryPage() {
   filterCategoryProducts();
 }
 
+async function loadPromoPage(promoId, promoTitle) {
+  const titleEl = document.getElementById('cat-title');
+  const grid = document.getElementById('category-products-grid');
+
+  if (!grid) return;
+
+  if (titleEl) titleEl.textContent = promoTitle;
+  document.title = `${promoTitle} — Nexus Gear`;
+
+  const allProducts = await fetchProductsFromAPI();
+  
+  categoryRawProducts = allProducts.filter(p => p.promoSection === promoId);
+
+  renderBrandFilters(categoryRawProducts);
+  filterCategoryProducts();
+}
+
+
 function renderBrandFilters(products) {
   const container = document.getElementById('brand-filters');
   if (!container) return;

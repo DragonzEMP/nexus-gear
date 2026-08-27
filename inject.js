@@ -1,60 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login — GG EZ Gadgets</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    .login-wrapper {
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .login-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 40px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    }
-    .login-card h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      font-size: 1.6rem;
-    }
-  </style>
-</head>
-<body>
-  <header class="navbar">
-    <div class="nav-container">
-      <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR.</a>
-    </div>
-  </header>
+const fs = require('fs');
 
-  <div class="login-wrapper">
-    <div class="login-card">
-      <h2><i class="fa-solid fa-lock" style="color: var(--accent-purple);"></i> Admin Sign In</h2>
-      <form id="login-form">
-        <div class="form-group" style="margin-bottom: 15px;">
-          <label style="display:block; margin-bottom:5px; color:var(--text-muted);">Username</label>
-          <input type="text" id="username" class="form-control" style="width:100%; padding:10px; background:var(--bg-secondary); border:1px solid var(--border-color); color:#fff; border-radius:6px;" required value="admin">
-        </div>
-        <div class="form-group" style="margin-bottom: 25px;">
-          <label style="display:block; margin-bottom:5px; color:var(--text-muted);">Password</label>
-          <input type="password" id="password" class="form-control" style="width:100%; padding:10px; background:var(--bg-secondary); border:1px solid var(--border-color); color:#fff; border-radius:6px;" required value="admin123">
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Login to Portal</button>
-      </form>
-    </div>
-  </div>
+const files = ['account.html', 'admin.html', 'category.html', 'checkout.html', 'login.html', 'product.html', 'track.html', 'user-auth.html'];
 
-  
+const footerHTML = `
 <style>
 /* Footer styles injected for consistency across standalone pages */
 .site-footer { background-color: #0b0d14; border-top: 1px solid #232738; padding: 40px 20px 20px; color: #94a3b8; font-family: 'Plus Jakarta Sans', sans-serif;}
@@ -109,21 +57,28 @@
     </div>
   </div>
 </footer>
+`;
 
-  <script>
-    document.getElementById('login-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const user = document.getElementById('username').value;
-      const pass = document.getElementById('password').value;
-
-      // Simple credential check (In production, this checks server auth)
-      if (user === 'admin' && pass === 'admin123') {
-        localStorage.setItem('admin_logged_in', 'true');
-        window.location.href = 'admin.html';
+let modifiedCount = 0;
+files.forEach(file => {
+  if (fs.existsSync(file)) {
+    let content = fs.readFileSync(file, 'utf8');
+    if (!content.includes('<footer class="site-footer">')) {
+      if (content.includes('<script')) {
+        const lastScriptIndex = content.lastIndexOf('<script');
+        content = content.slice(0, lastScriptIndex) + footerHTML + '\n  ' + content.slice(lastScriptIndex);
       } else {
-        alert('❌ Invalid Credentials! (Try: admin / admin123)');
+        const bodyEndIndex = content.indexOf('</body>');
+        if (bodyEndIndex !== -1) {
+          content = content.slice(0, bodyEndIndex) + footerHTML + '\n' + content.slice(bodyEndIndex);
+        } else {
+          content += '\n' + footerHTML;
+        }
       }
-    });
-  </script>
-</body>
-</html>
+      fs.writeFileSync(file, content);
+      modifiedCount++;
+      console.log('Injected footer into', file);
+    }
+  }
+});
+console.log('Done. Modified', modifiedCount, 'files.');

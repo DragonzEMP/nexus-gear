@@ -1003,10 +1003,12 @@ button {
   box-sizing: border-box !important;
 }
 
-.nav-links {
-  display: flex !important;
-  align-items: center !important;
-  gap: 12px !important;
+@media screen and (min-width: 769px) {
+  .nav-links {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
 }
 
 .nav-actions {

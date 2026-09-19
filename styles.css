@@ -910,6 +910,12 @@ button {
     max-width: 140px !important;
   }
 
+  .mobile-menu-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
   /* Category grid: 3 columns x 2 rows on mobile */
   .category-grid, .categories-grid, #categories-container {
     display: grid !important;

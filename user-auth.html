@@ -134,12 +134,23 @@
 
   <header class="top-bar">
     <div class="container nav-flex">
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu(event)"><i class="fa-solid fa-bars"></i></button>
       <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR<span class="dot">.</span></a>
       <a href="index.html" style="color:var(--text-muted); text-decoration:none; font-weight:600;">
         <i class="fa-solid fa-arrow-left"></i> Continue Shopping
       </a>
     </div>
-  </header>
+  
+  <!-- Mobile Navigation Dropdown -->
+  <div class="mobile-dropdown" id="mobile-nav-dropdown">
+    <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+    <a href="index.html#categories"><i class="fa-solid fa-layer-group"></i> Categories</a>
+    <a href="index.html#new-arrivals"><i class="fa-solid fa-fire"></i> Trends</a>
+    <a href="index.html#featured"><i class="fa-solid fa-star"></i> Featured</a>
+    <a href="admin.html"><i class="fa-solid fa-bolt"></i> Admin</a>
+    <a href="track.html"><i class="fa-solid fa-location-dot"></i> Track Order</a>
+  </div>
+</header>
 
   <div class="auth-wrapper">
     <div class="auth-card">
@@ -212,6 +223,7 @@
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-about">
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu(event)"><i class="fa-solid fa-bars"></i></button>
       <a href="index.html" class="brand-logo"><span>NEXUS</span>GEAR<span class="dot">.</span></a>
       <p>Nexus Gear is your premier store for high-performance gaming gear, custom mechanical keyboards, precision mice, and desk setup accessories in Bangladesh. Elevate Your Play.</p>
     </div>

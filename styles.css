@@ -897,7 +897,8 @@ button {
   header, nav, .navbar, .top-bar {
     width: 100% !important;
     max-width: 100vw !important;
-    overflow: hidden !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
   }
 
   /* Hide long navigation links on mobile */
@@ -967,6 +968,12 @@ button {
 
 .mobile-dropdown.active {
   display: flex !important;
+}
+
+@media screen and (min-width: 769px) {
+  .mobile-dropdown {
+    display: none !important;
+  }
 }
 
 .mobile-dropdown a {
